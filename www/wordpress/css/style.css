@@ -1,0 +1,55 @@
+header{
+    text-align: center;
+}
+#list_plateaux{
+    text-decoration: none;
+    padding: 10px;
+    position: absolute;
+    height: 60px;
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    background-color: #ffa816;
+    top: 60%;
+    right: 0%;
+    cursor: pointer;
+    z-index: 100;
+}
+
+li{
+    padding: 10px;
+    list-style-type: none;
+}
+.enonce{
+    background-color: #ffd35c;
+    padding: 10px;
+    color: white;
+    font-weight: bolder;
+}
+.entete{
+    border-radius: 0px;
+    color: white;
+    background-color: #ff8012;
+    padding: 10px;
+    font-weight: bolder;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+.entete h3{
+    font-weight: bold;
+    font-size: 20px;
+}
+#img-logo{
+    width: 220px;
+    height: 218px;
+}
+header{
+    background-color: #ececec;
+    color: #ff8012;
+    margin: 0px;
+}
+header h1{
+    margin: 0px;
+}
