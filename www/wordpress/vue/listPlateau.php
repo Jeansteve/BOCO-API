@@ -42,6 +42,7 @@
 </div>
 <script type="text/javascript">
     $(function(){
+        var numP;
         //function getDetails(numP)
         $('.btDetail').click(function(){
             //alert($(this).attr("id"));
@@ -62,11 +63,11 @@
                 dataType: "xml",
                 success: function(xml)
                 {
-                    var numP = $(xml).find('numP').text();
+                    numP = $(xml).find('numP').text();
                     var titre = "<div class='row ,col-lg-12'><h2 class='col-lg-9'>"+$(xml).find('Titre').text()+"</h2>";
                     var prix = "<h2 class='col-lg-3'>"+$(xml).find('Prix').text()+" €</h2></div>";
                     var entree = "<div class='row'><img class='col-lg-4' src='./images/plateau"+num+".jpg' alt=''/><ul class='col-lg-8'><span class='enonce col-lg-12'>Entrée</span><li>"+$(xml).find('Entree').text()+"</li>";
-                    var plat = "<span class='enonce col-lg-12'>Plat</span><li>"+$(xml).find('Plat').text()+"</li>";
+                    var plat = "<span class='enonce col-lg-12' >Plat</span><li>"+$(xml).find('Plat').text()+"</li>";
                     var dessert = "<span class='enonce col-lg-12'>Dessert</span><li>"+$(xml).find('Dessert').text()+"</li>";
 
                     var row = "<div class='row col-lg-12'>"; // block global des détails
@@ -92,15 +93,47 @@
                         }
 
                         $(details).html(row);//si je met cette ligne hors du get la variable $.fromage ne sera plus disponible
-                        $(details).append("<form action='commander.php' method='get' id='form-commande'>" +
-                        "<input type='text' name='numP' value='"+numP+"' hidden/>" +
-                        "<input type='submit' value='Commmander'/>" +
-                        "</form>");
+
+//                        $(details).append("<form action='./index.php?page=commander' method='post' id='form-commande'>" +
+//                        "<input type='text' name='numP' value='"+numP+"' hidden/>" +
+//                        "<input type='submit' value='Commmander'/>" +
+//                        "</form>");
+
+
+                        /**
+                         * Ajout du bouton commander et de la page de commande en modal
+                         */
+                        $(details).append("" +
+                        "<button data-toggle='modal' href=\"vue/commander.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary col-lg-3' style='margin-right:15px;'>commander </button>"+
+                        "<div class='modal fade' id='infos'>"+
+                        "<div class='modal-dialog'>"+
+                        "<div class='modal-content'></div>"+
+                        "</div></div> </div>"
+                        );
+                        /**
+                         * Ajout du bouton pour les infos sur un plateau
+                         */
+                        $(details).append("" +
+                            "<button data-toggle='modal' href=\"vue/allDetails.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary col-lg-8'>Qui a confectionner mon BoCo ?? </button>"+
+                            "<div class='modal fade' id='infosChef'>"+
+                            "<div class='modal-dialog'>"+
+                            "<div class='modal-content'></div>"+
+                            "</div></div> </div>"
+                        );
 
                     });
                 }
+
             });
         });
-
+        /**
+         * J'éfface l'encien modal et je met l'adresse du nouveau bouton
+         */
+        $("body").on("hidden.bs.modal", ".modal", function () {
+            $(this).removeData("bs.modal");
+        });
+        $("#infoChef").click(function() {
+            $("#infos").modal({ remote: "vue/allDetails.php?numP= "+numP+"" } ,"show");
+        });
     });
 </script>
