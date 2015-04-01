@@ -10,7 +10,7 @@
             $div .= "<div class='col-lg-12 entete '>";
             $div .= "<h3 class='panel-title'>";
             $div .= "<span class='col-lg-10'>".$plateau['libelle_plateau']."</span>";
-            $div .= "<a href='#".$plateau['num_plateau']."' data-parent='#accordeonList' data-toggle='collapse'  class='btDetail col-lg-2' num='".$plateau['num_plateau']."' >Détails</a>";
+            $div .= "<a href='#".$plateau['num_plateau']."'  data-parent='#accordeonList' data-toggle='collapse'  class='btDetail col-lg-2' num='".$plateau['num_plateau']."' >Détails</a>";
             $div .= "</h3></div></div>";
 
             $content = "<div class='panel-collapse collapse' id='".$plateau['num_plateau']."' >";
@@ -40,6 +40,13 @@
     ?>
 
 </div>
+<!-- Balise qui va accueillir le contenu du modal-->
+<div class="modal fade" id="infos">
+    <div class="modal-dialog">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
 <script type="text/javascript">
     $(function(){
         var numP;
@@ -104,21 +111,13 @@
                          * Ajout du bouton commander et de la page de commande en modal
                          */
                         $(details).append("" +
-                        "<button data-toggle='modal' href=\"vue/commander.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary col-lg-3' style='margin-right:15px;'>commander </button>"+
-                        "<div class='modal fade' id='infos'>"+
-                        "<div class='modal-dialog'>"+
-                        "<div class='modal-content'></div>"+
-                        "</div></div> </div>"
+                        "<button data-toggle='modal' data-backdrop='static' href=\"vue/commander.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary col-lg-3' style='margin-right:15px;'>commander </button>"
                         );
                         /**
                          * Ajout du bouton pour les infos sur un plateau
                          */
                         $(details).append("" +
-                            "<button data-toggle='modal' href=\"vue/allDetails.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary col-lg-8'>Qui a confectionner mon BoCo ?? </button>"+
-                            "<div class='modal fade' id='infosChef'>"+
-                            "<div class='modal-dialog'>"+
-                            "<div class='modal-content'></div>"+
-                            "</div></div> </div>"
+                            "<button data-toggle='modal' data-backdrop='static' href=\"vue/allDetails.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary col-lg-8'>Qui a confectionner mon BoCo ?? </button>"
                         );
 
                     });
@@ -145,12 +144,5 @@
         $("body").on("hidden.bs.modal", ".modal", function () {
             $(this).removeData("bs.modal");
         });
-
-
-
-//        $("#infoChef").click(function() {
-//            $("#infos").modal({ remote: "vue/allDetails.php?numP= "+numP+"" } ,"show");
-//        });
-
     });
 </script>
