@@ -10,22 +10,22 @@
             $div .= "<div class='col-lg-12 entete '>";
             $div .= "<h3 class='panel-title'>";
             $div .= "<span class='col-lg-10'>".$plateau['libelle_plateau']."</span>";
-            $div .= "<a href='#".$plateau['num_plateau']."' data-parent=\"#accordeonList\" data-toggle='collapse' class='btDetail col-lg-2' num='".$plateau['num_plateau']."' >Détails</a>";
+            $div .= "<a href='#".$plateau['num_plateau']."' data-parent='#accordeonList' data-toggle='collapse'  class='btDetail col-lg-2' num='".$plateau['num_plateau']."' >Détails</a>";
             $div .= "</h3></div></div>";
 
-            $content = "<div class='panel-collapse collapse ' id='".$plateau['num_plateau']."' >";
+            $content = "<div class='panel-collapse collapse' id='".$plateau['num_plateau']."' >";
             $content .= "<div class='panel-body'>";
 
             /**
              * Bouton pour le formulaire de la commande et la quantitée
              */
             //je passe le numéro de la commande en get
-            $form = "<form action='commander.php' method='get' id='form-commande'>";
-            $form .= "<label for='qt'>Saisir la quantité : </label>";
-            $form .= "<input type='text' name='quantitee' id='qt' required/>";
-            $form .= "<input type='text' name='numP' value='".$plateau['num_plateau']."' hidden/>";
-            $form .= "<input type='submit' value='Commmander'/>";
-            $form .= "</form>";
+//            $form = "<form action='commander.php' method='get' id='form-commande'>";
+//            $form .= "<label for='qt'>Saisir la quantité : </label>";
+//            $form .= "<input type='text' name='quantitee' id='qt' required/>";
+//            $form .= "<input type='text' name='numP' value='".$plateau['num_plateau']."' hidden/>";
+//            $form .= "<input type='submit' value='Commmander'/>";
+//            $form .= "</form>";
 
             $content .= "</div></div>"; // fermeture du contenu
 
@@ -64,9 +64,9 @@
                 success: function(xml)
                 {
                     numP = $(xml).find('numP').text();
-                    var titre = "<div class='row ,col-lg-12'><h2 class='col-lg-9'>"+$(xml).find('Titre').text()+"</h2>";
+                    var titre = "<div class='row col-lg-12'><h2 class='col-lg-9'>"+$(xml).find('Titre').text()+"</h2>";
                     var prix = "<h2 class='col-lg-3'>"+$(xml).find('Prix').text()+" €</h2></div>";
-                    var entree = "<div class='row'><img class='col-lg-4' src='./images/plateau"+num+".jpg' alt=''/><ul class='col-lg-8'><span class='enonce col-lg-12'>Entrée</span><li>"+$(xml).find('Entree').text()+"</li>";
+                    var entree = "<div class='row'><img class='col-lg-4' src='./images/plateau"+num+".jpg' alt=''/><ul class='col-lg-8'><span class='det"+num+" enonce col-lg-12'>Entrée</span><li>"+$(xml).find('Entree').text()+"</li>";
                     var plat = "<span class='enonce col-lg-12' >Plat</span><li>"+$(xml).find('Plat').text()+"</li>";
                     var dessert = "<span class='enonce col-lg-12'>Dessert</span><li>"+$(xml).find('Dessert').text()+"</li>";
 
@@ -123,8 +123,16 @@
 
                     });
                 }
-
+//                $('.det1').attr("data-toggle","tooltip");
+//                $('ul span').attr("data-placement","left");
+//                $('ul span').attr("title","Tooltip on left");
             });
+
+            /**
+             * L'ors du click sur un boutton details je dois fermer les autres accordeon
+             * */
+            $('div').removeClass('in');
+
         });
         /**
          * J'éfface l'encien modal et je met l'adresse du nouveau bouton
@@ -132,8 +140,12 @@
         $("body").on("hidden.bs.modal", ".modal", function () {
             $(this).removeData("bs.modal");
         });
-        $("#infoChef").click(function() {
-            $("#infos").modal({ remote: "vue/allDetails.php?numP= "+numP+"" } ,"show");
-        });
+
+
+
+//        $("#infoChef").click(function() {
+//            $("#infos").modal({ remote: "vue/allDetails.php?numP= "+numP+"" } ,"show");
+//        });
+
     });
 </script>
