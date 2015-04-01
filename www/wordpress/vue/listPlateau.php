@@ -131,8 +131,13 @@
             /**
              * L'ors du click sur un boutton details je dois fermer les autres accordeon
              * */
-            $('div').removeClass('in');
 
+            $('div').each(function(){
+               if($(this).hasClass("in"))
+               {
+                   $(this).removeClass('in');
+               }
+            });
         });
         /**
          * J'éfface l'encien modal et je met l'adresse du nouveau bouton
