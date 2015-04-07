@@ -10,7 +10,7 @@
             $div .= "<div class='col-lg-12 entete '>";
             $div .= "<h3 class='panel-title'>";
             $div .= "<span class='col-lg-10'>".$plateau['libelle_plateau']."</span>";
-            $div .= "<a href='#".$plateau['num_plateau']."'  data-parent='#accordeonList' data-toggle='collapse'  class='btDetail col-lg-2' num='".$plateau['num_plateau']."' >Détails</a>";
+            $div .= "<a href='#".$plateau['num_plateau']."'  data-parent='#accordeonList' data-toggle='collapse'  class=' btDetail col-lg-2' num='".$plateau['num_plateau']."' >Détails <span  class='glyphicon glyphicon-plus'></span></a>";
             $div .= "</h3></div></div>";
 
             $content = "<div class='panel-collapse collapse' id='".$plateau['num_plateau']."' >";
@@ -38,12 +38,33 @@
         }
 
     ?>
-
 </div>
+
+<?php
+/**
+ * Gestion des parametres
+ */
+if(!empty($com))
+{
+    //j'affiche le modal
+    echo "<script>$(function(){ $('#infos').modal('show'); });</script>";
+}
+else{
+    echo print_r($com);
+}
+?>
 <!-- Balise qui va accueillir le contenu du modal-->
 <div class="modal fade" id="infos">
     <div class="modal-dialog">
-        <div class="modal-content"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p class="glyphicon-triangle-bottom">Votre commande a été pris en compte <br/>Jamais un sans deux, commander un autre bocal !!!!!</p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -51,7 +72,7 @@
     $(function(){
         var numP;
         //function getDetails(numP)
-        $('.btDetail').click(function(){
+        $('.btDetail').click(function(e){
             //alert($(this).attr("id"));
             var num = $(this).attr("num");
             /*
@@ -72,7 +93,7 @@
                 {
                     numP = $(xml).find('numP').text();
                     var titre = "<div class='row col-lg-12'><h2 class='col-lg-9'>"+$(xml).find('Titre').text()+"</h2>";
-                    var prix = "<h2 class='col-lg-3'>"+$(xml).find('Prix').text()+" €</h2></div>";
+                    var prix = "<h2 class='col-lg-3' >"+$(xml).find('Prix').text()+" <span class='glyphicon glyphicon-euro'></span></h2></div>";
                     var entree = "<div class='row'><img class='col-lg-4' src='./images/plateau"+num+".jpg' alt=''/><ul class='col-lg-8'><span class='det"+num+" enonce col-lg-12'>Entrée</span><li>"+$(xml).find('Entree').text()+"</li>";
                     var plat = "<span class='enonce col-lg-12' >Plat</span><li>"+$(xml).find('Plat').text()+"</li>";
                     var dessert = "<span class='enonce col-lg-12'>Dessert</span><li>"+$(xml).find('Dessert').text()+"</li>";
@@ -111,7 +132,7 @@
                          * Ajout du bouton commander et de la page de commande en modal
                          */
                         $(details).append("" +
-                        "<button data-toggle='modal' data-backdrop='static' href=\"vue/commander.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary col-lg-3' style='margin-right:15px;'>commander </button>"
+                        "<button data-toggle='modal' data-backdrop='static' href=\"vue/commander.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary glyphicon glyphicon-screenshot col-lg-3' style='margin-right:15px;'>commander </button>"
                         );
                         /**
                          * Ajout du bouton pour les infos sur un plateau
@@ -131,12 +152,16 @@
              * L'ors du click sur un boutton details je dois fermer les autres accordeon
              * */
 
-            $('div').each(function(){
+            $('.panel-collapse').each(function(){
                if($(this).hasClass("in"))
                {
+                   $(this).prev('div').find(".glyphicon").attr("class","glyphicon glyphicon-plus"); //je change l'icon du boutton détails
                    $(this).removeClass('in');
                }
             });
+
+            $(this).children('span').attr('class','glyphicon glyphicon-minus');
+            //alert ($.span);
         });
         /**
          * J'éfface l'encien modal et je met l'adresse du nouveau bouton
