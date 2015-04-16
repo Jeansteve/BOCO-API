@@ -2,6 +2,7 @@
 <div id="accordeonList" class="panel-group col-lg-9 col-lg-offset-3">
     <h3>Vos BOCO en Bocal à emporter</h3>
     <?php
+    //echo date('Y-m-d H:i:s');
     $i = 0; // permet de numéroter les plateaux
         foreach($plateaux As $plateau)
         {
@@ -14,7 +15,7 @@
             $div .= "</h3></div></div>";
 
             $content = "<div class='panel-collapse collapse' id='".$plateau['num_plateau']."' >";
-            $content .= "<div class='panel-body'>";
+            $content .= "<div class='panel-body'><img src='../images/ajax-loader.gif' alt='Chargement en cours ...'/>Chargement en cours ... ";
 
             /**
              * Bouton pour le formulaire de la commande et la quantitée
@@ -49,20 +50,20 @@ if(!empty($com))
     //j'affiche le modal
     echo "<script>$(function(){ $('#infos').modal('show'); });</script>";
 }
-else{
-    echo print_r($com);
-}
 ?>
 <!-- Balise qui va accueillir le contenu du modal-->
 <div class="modal fade" id="infos">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header " style="background-color: #ff8012; color: white;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Confirmation</h4>
+                <h4 class="modal-title"><span class="glyphicon glyphicon-ok"></span>    Confirmation !!!!</h4>
             </div>
             <div class="modal-body">
-                <p class="glyphicon-triangle-bottom">Votre commande a été pris en compte <br/>Jamais un sans deux, commander un autre bocal !!!!!</p>
+                <div class="row ">
+                    <p class="col-lg-9">Votre commande a été pris en compte <br/>Seul c'est bien,à deux c'est mieu ! <br/>commander un autre bocal ! </p>
+                    <span class="col-lg-3" ><img style="width:80px;height: 80px;" src="../images/logo-pouce.jpg" alt="Bien"/></span>
+                </div>
             </div>
         </div>
     </div>
@@ -132,13 +133,13 @@ else{
                          * Ajout du bouton commander et de la page de commande en modal
                          */
                         $(details).append("" +
-                        "<button data-toggle='modal' data-backdrop='static' href=\"vue/commander.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary glyphicon glyphicon-screenshot col-lg-3' style='margin-right:15px;'>commander </button>"
+                        "<button data-toggle='modal' data-backdrop='static' href=\"vue/commander.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary btn-lg  col-lg-3' style='margin-right:15px;'><span class='glyphicon glyphicon-shopping-cart'></span>  commander </button>"
                         );
                         /**
                          * Ajout du bouton pour les infos sur un plateau
                          */
                         $(details).append("" +
-                            "<button data-toggle='modal' data-backdrop='static' href=\"vue/allDetails.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary col-lg-8'>Qui a confectionner mon BoCo ?? </button>"
+                            "<button data-toggle='modal' data-backdrop='static' href=\"vue/allDetails.php?numP="+ numP + "\" data-target='#infos' class='btn btn-primary btn-lg col-lg-8'><span class='glyphicon glyphicon-info-sign'></span> Qui a confectionner mon BoCo ?? </button>"
                         );
 
                     });
@@ -169,5 +170,8 @@ else{
         $("body").on("hidden.bs.modal", ".modal", function () {
             $(this).removeData("bs.modal");
         });
+
+
+
     });
 </script>
