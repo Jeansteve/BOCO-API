@@ -45,6 +45,7 @@
         echo $e->getMessage();
     }
 
+
     try
     {
         $bdd = new PDO("mysql:host=localhost;dbname=BOCCO-GROUPE1","root","root");
